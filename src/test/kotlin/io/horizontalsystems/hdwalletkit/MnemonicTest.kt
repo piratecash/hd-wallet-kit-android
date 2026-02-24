@@ -1,177 +1,168 @@
 package io.horizontalsystems.hdwalletkit
 
-
-import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Assert
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.powermock.api.mockito.PowerMockito
-import org.powermock.api.mockito.PowerMockito.doAnswer
-import org.powermock.api.mockito.PowerMockito.mock
-import org.powermock.core.classloader.annotations.PowerMockIgnore
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.modules.junit4.PowerMockRunner
-import java.security.SecureRandom
-
-@RunWith(PowerMockRunner::class)
-@PrepareForTest(SecureRandom::class, Mnemonic::class)
-@PowerMockIgnore("javax.crypto.*")
 
 class MnemonicTest {
 
     private val mnemonic = Mnemonic()
 
     @Test
-    fun toMnemonic_Success() {
-        val entropy: ByteArray = hexStringToByteArray("7787bfe5815e1912a1ec409a56391109")
-        val mnemonicWords = mnemonic.toMnemonic(entropy, Language.English).joinToString(separator = " ")
-        val expectedWords = "jealous digital west actor thunder matter marble marine olympic range dust banner"
-        Assert.assertEquals(mnemonicWords, expectedWords)
+    fun toMnemonic_knownEntropy_returnsExpectedWords() {
+        val entropy = hexStringToByteArray("7787bfe5815e1912a1ec409a56391109")
+        val words = mnemonic.toMnemonic(entropy, Language.English).joinToString(separator = " ")
+        val expected = "jealous digital west actor thunder matter marble marine olympic range dust banner"
+        assertEquals(words, expected)
     }
 
     @Test(expected = Mnemonic.EmptyEntropyException::class)
-    @Throws(Exception::class)
-    fun toMnemonic_EmptyEntropy() {
-        val entropy: ByteArray = hexStringToByteArray("")
-        mnemonic.toMnemonic(entropy, Language.English)
+    fun toMnemonic_emptyEntropy_throws() {
+        mnemonic.toMnemonic(hexStringToByteArray(""), Language.English)
     }
 
     @Test
-    fun validate_Success() {
-
-        val mnemonicKeys = listOf("jealous", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_validEnglish_succeeds() {
+        val words = listOf(
+            "jealous", "digital", "west", "actor", "thunder", "matter",
+            "marble", "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test
-    fun validate_Spanish_Success() {
-
-        val mnemonicKeys = listOf("fresa", "miope", "triste", "bozal", "ética", "risa", "virgo", "nariz", "gráfico", "regla", "selva", "uva", "olivo", "candil", "servir")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_validSpanish_succeeds() {
+        val words = listOf(
+            "fresa", "miope", "triste", "bozal", "ética", "risa",
+            "virgo", "nariz", "gráfico", "regla", "selva", "uva",
+            "olivo", "candil", "servir"
+        )
+        mnemonic.validate(words)
     }
 
     @Test
-    fun validate_Spanish_With_Diacriticals_Success() {
-
-        val mnemonicKeys = listOf("exceso", "tobillo", "cuento", "tapa", "fibra", "rueda", "mojar", "gente", "caimán", "coco", "médula", "oculto")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_spanishWithDiacriticals_succeeds() {
+        val words = listOf(
+            "exceso", "tobillo", "cuento", "tapa", "fibra", "rueda",
+            "mojar", "gente", "caimán", "coco", "médula", "oculto"
+        )
+        mnemonic.validate(words)
     }
 
     @Test
-    fun validate_Chinese_Success() {
-
-        val mnemonicKeys = listOf("搞", "顿", "雏", "百", "跑", "秒", "摊", "婚", "父", "迷", "挺", "卢", "浪", "目", "吏")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_validChinese_succeeds() {
+        val words = listOf(
+            "搞", "顿", "雏", "百", "跑", "秒",
+            "摊", "婚", "父", "迷", "挺", "卢",
+            "浪", "目", "吏"
+        )
+        mnemonic.validate(words)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicCountException::class)
-    fun validate_WrongWordsCount() {
-
-        val mnemonicKeys = listOf("digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_wrongWordCount_throws() {
+        val words = listOf(
+            "digital", "west", "actor", "thunder", "matter", "marble",
+            "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicCountException::class)
-    fun validate_WrongWordsCount_SimplifiedChinese() {
-
-        val mnemonicKeys = listOf("搞", "顿", "雏", "百", "跑", "秒", "摊", "婚", "父", "迷", "挺", "卢", "浪", "目", "吏", "搞")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_wrongWordCountChinese_throws() {
+        val words = listOf(
+            "搞", "顿", "雏", "百", "跑", "秒",
+            "摊", "婚", "父", "迷", "挺", "卢",
+            "浪", "目", "吏", "搞"
+        )
+        mnemonic.validate(words)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicKeyException::class)
-    fun validate_InvalidMnemonicKey() {
-
-        val mnemonicKeys = listOf("jealous", "digitalll", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_invalidWord_throws() {
+        val words = listOf(
+            "jealous", "digitalll", "west", "actor", "thunder", "matter",
+            "marble", "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicKeyException::class)
-    fun validate_MixedLanguageMnemonicKey() {
-
-        val mnemonicKeys = listOf("あいこくしん", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_mixedLanguages_throws() {
+        val words = listOf(
+            "あいこくしん", "digital", "west", "actor", "thunder", "matter",
+            "marble", "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test(expected = Mnemonic.ChecksumException::class)
-    fun validate_InvalidChecksum() {
-
-        val mnemonicKeys = listOf("jealous", "olympic", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun validate_invalidChecksum_throws() {
+        val words = listOf(
+            "jealous", "olympic", "digital", "west", "actor", "thunder",
+            "matter", "marble", "marine", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test
-    fun toSeed_Success() {
-
-        val mnemonicKeys = listOf("jealous", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        val seed = mnemonic.toSeed(mnemonicKeys)
-
-        val expectedSeed = hexStringToByteArray("6908630f564bd3ca9efb521e72da86727fc78285b15decedb44f40b02474502ed6844958b29465246a618b1b56b4bdffacd1de8b324159e0f7f594c611b0519d")
-
-        Assert.assertArrayEquals(seed, expectedSeed)
+    fun toSeed_validWords_returnsExpectedSeed() {
+        val words = listOf(
+            "jealous", "digital", "west", "actor", "thunder", "matter",
+            "marble", "marine", "olympic", "range", "dust", "banner"
+        )
+        val seed = mnemonic.toSeed(words)
+        val expected = hexStringToByteArray(
+            "6908630f564bd3ca9efb521e72da86727fc78285b15decedb44f40b02474502e" +
+            "d6844958b29465246a618b1b56b4bdffacd1de8b324159e0f7f594c611b0519d"
+        )
+        assertArrayEquals(seed, expected)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicCountException::class)
-    fun toSeed_WrongWordsCount() {
-
-        val mnemonicKeys = listOf("digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.toSeed(mnemonicKeys)
+    fun toSeed_wrongWordCount_throws() {
+        val words = listOf(
+            "digital", "west", "actor", "thunder", "matter", "marble",
+            "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.toSeed(words)
     }
 
     @Test(expected = Mnemonic.InvalidMnemonicKeyException::class)
-    fun toSeed_InvalidMnemonicKey() {
-
-        val mnemonicKeys = listOf("jealous", "digitalll", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        mnemonic.validate(mnemonicKeys)
+    fun toSeed_invalidWord_throws() {
+        val words = listOf(
+            "jealous", "digitalll", "west", "actor", "thunder", "matter",
+            "marble", "marine", "olympic", "range", "dust", "banner"
+        )
+        mnemonic.validate(words)
     }
 
     @Test
-    fun generate() {
+    fun generate_default_returns12Words() {
+        val words = mnemonic.generate()
+        assertEquals(12, words.size)
+    }
 
-        val entropy = hexStringToByteArray("7787bfe5815e1912a1ec409a56391109")
-        val seed = ByteArray(128 / 8)
-        val random = mock(SecureRandom::class.java)
+    @Test
+    fun generate_24words_returns24Words() {
+        val words = mnemonic.generate(Mnemonic.EntropyStrength.VeryHigh)
+        assertEquals(24, words.size)
+    }
 
-        PowerMockito.whenNew(SecureRandom::class.java)
-                .withNoArguments()
-                .thenReturn(random)
-
-        doAnswer {
-            val arg1: ByteArray = it.arguments[0] as ByteArray
-            for (i in 0 until entropy.size) {
-                arg1[i] = entropy[i]
-            }
-        }.whenever(random).nextBytes(seed)
-
-        val mnemonicKeys = mnemonic.generate().toTypedArray()
-
-        val mnemonicKeysExpected = arrayOf("jealous", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
-
-        Assert.assertArrayEquals(mnemonicKeys, mnemonicKeysExpected)
+    @Test
+    fun generate_result_passesValidation() {
+        val words = mnemonic.generate()
+        mnemonic.validate(words)
     }
 
     private fun hexStringToByteArray(s: String): ByteArray {
         val len = s.length
         val data = ByteArray(len / 2)
-
         var i = 0
         while (i < len) {
             data[i / 2] = ((Character.digit(s[i], 16) shl 4) + Character.digit(s[i + 1], 16)).toByte()
             i += 2
         }
-
         return data
     }
-
 }

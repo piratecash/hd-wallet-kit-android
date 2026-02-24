@@ -1,38 +1,39 @@
 package io.horizontalsystems.hdwalletkit
 
+import java.util.concurrent.ConcurrentHashMap
+
 object WordList {
 
-    private val wordListsMap = mapOf(
-            Language.English to MnemonicWordList(english, false),
-            Language.Japanese to MnemonicWordList(japanese, false),
-            Language.Korean to MnemonicWordList(korean, false),
-            Language.Spanish to MnemonicWordList(spanish, true),
-            Language.SimplifiedChinese to MnemonicWordList(simplifiedChinese, false),
-            Language.TraditionalChinese to MnemonicWordList(traditionalChinese, false),
-            Language.French to MnemonicWordList(french, true),
-            Language.Italian to MnemonicWordList(italian, false),
-            Language.Czech to MnemonicWordList(czech, false),
-            Language.Portuguese to MnemonicWordList(portuguese, false)
-    )
+    private val wordListsMap = ConcurrentHashMap<Language, MnemonicWordList>()
+    private val wordListsStrictMap = ConcurrentHashMap<Language, MnemonicWordList>()
 
-    private val wordListsStrictMap = mapOf(
-        Language.English to MnemonicWordList(english, false),
-        Language.Japanese to MnemonicWordList(japanese, false),
-        Language.Korean to MnemonicWordList(korean, false),
-        Language.Spanish to MnemonicWordList(spanish, false),
-        Language.SimplifiedChinese to MnemonicWordList(simplifiedChinese, false),
-        Language.TraditionalChinese to MnemonicWordList(traditionalChinese, false),
-        Language.French to MnemonicWordList(french, false),
-        Language.Italian to MnemonicWordList(italian, false),
-        Language.Czech to MnemonicWordList(czech, false),
-        Language.Portuguese to MnemonicWordList(portuguese, false)
-    )
+    fun wordListStrict(language: Language): MnemonicWordList =
+        wordListsStrictMap.getOrPut(language) {
+            MnemonicWordList(wordsForLanguage(language), false)
+        }
 
-    fun wordListStrict(language: Language): MnemonicWordList = wordListsStrictMap[language]
-        ?: throw IllegalStateException("No MnemonicWordList found for language: ${language.name}")
+    fun wordList(language: Language): MnemonicWordList =
+        wordListsMap.getOrPut(language) {
+            MnemonicWordList(wordsForLanguage(language), isNormalized(language))
+        }
 
-    fun wordList(language: Language): MnemonicWordList = wordListsMap[language]
-            ?: throw IllegalStateException("No MnemonicWordList found for language: ${language.name}")
+    private fun wordsForLanguage(language: Language): List<String> = when (language) {
+        Language.English -> english
+        Language.Japanese -> japanese
+        Language.Korean -> korean
+        Language.Spanish -> spanish
+        Language.SimplifiedChinese -> simplifiedChinese
+        Language.TraditionalChinese -> traditionalChinese
+        Language.French -> french
+        Language.Italian -> italian
+        Language.Czech -> czech
+        Language.Portuguese -> portuguese
+    }
+
+    private fun isNormalized(language: Language): Boolean = when (language) {
+        Language.Spanish, Language.French -> true
+        else -> false
+    }
 
     fun detectLanguages(inputWords: List<String>): List<Language> {
         var languages = Language.values().toList()
