@@ -108,7 +108,10 @@ class Mnemonic {
         // used as a pseudo-random function. Desired length of the
         // derived key is 512 bits (= 64 bytes).
         //
-        val pass = mnemonicKeys.joinToString(separator = " ")
+        // BIP39 mandates U+3000 (IDEOGRAPHIC SPACE) as the word separator for
+        // Japanese mnemonics, regular U+0020 for everything else.
+        val separator = if (detectLanguage(mnemonicKeys) == Language.Japanese) "　" else " "
+        val pass = mnemonicKeys.joinToString(separator = separator)
         val salt = "mnemonic$passphrase"
 
         return PBKDF2SHA512.derive(pass, salt, PBKDF2_ROUNDS, 64)
@@ -120,17 +123,17 @@ class Mnemonic {
      * requires deriving the original entropy, this function is the same as calling [toEntropy]
      */
     fun validate(mnemonicKeys: List<String>) {
-        var appropriateWordList = WordList.wordList(Language.English)
+        val language = detectLanguage(mnemonicKeys)
+        toEntropy(mnemonicKeys, WordList.wordList(language))
+    }
 
+    private fun detectLanguage(mnemonicKeys: List<String>): Language {
         for (language in Language.values()) {
-            val wordList = WordList.wordList(language)
-            if (wordList.validWords(mnemonicKeys)) {
-                appropriateWordList = wordList
-                break
+            if (WordList.wordList(language).validWords(mnemonicKeys)) {
+                return language
             }
         }
-
-        toEntropy(mnemonicKeys, appropriateWordList)
+        return Language.English
     }
 
     fun validateStrict(mnemonicKeys: List<String>) {
