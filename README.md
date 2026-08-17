@@ -13,12 +13,12 @@ Kotlin/Native, iOS, 32-bit Desktop, Linux ARM64, and macOS x64 are not release t
 
 ```kotlin
 repositories {
-    maven("https://piratecash.github.io/hd-wallet-kit-android")
+    maven("https://jitpack.io")
     mavenCentral()
 }
 
 dependencies {
-    implementation("com.github.piratecash:hd-wallet-kit-kmp:<version>")
+    implementation("com.github.piratecash.hd-wallet-kit-android:hd-wallet-kit-kmp:<version>")
 }
 ```
 
@@ -43,4 +43,4 @@ The publication task writes only to `build/maven-repo`; the consumer build resol
 
 ## Releases
 
-Local builds default to `0.0.0-SNAPSHOT`. GitHub Pages publication runs only when a Git tag is pushed whose name is exact numeric SemVer (`MAJOR.MINOR.PATCH`, for example `1.2.3`). The workflow validates the tag again, runs target tests and local consumer resolution, publishes locally, then adds the artifacts to `gh-pages` with a normal non-force push. Branch and pull-request workflows never publish.
+Local builds default to `0.0.0-SNAPSHOT`. Versioned releases are distributed through JitPack: push a Git tag whose name is exact numeric SemVer (`MAJOR.MINOR.PATCH`, for example `1.2.3`), then use that tag as the dependency version. JitPack builds the tagged source with `jitpack.yml` and publishes the Kotlin Multiplatform metadata plus Android and Desktop JVM artifacts. The Android and cross-platform Desktop verification workflow remains separate from publication.
