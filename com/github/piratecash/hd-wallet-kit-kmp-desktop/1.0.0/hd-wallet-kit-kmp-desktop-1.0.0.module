@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../hd-wallet-kit-kmp/1.0.0/hd-wallet-kit-kmp-1.0.0.module",
+    "group": "com.github.piratecash",
+    "module": "hd-wallet-kit-kmp",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "desktopApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-desktop-1.0.0.jar",
+          "url": "hd-wallet-kit-kmp-desktop-1.0.0.jar",
+          "size": 171057,
+          "sha512": "fbce48036383fb1f77134f86f9bdc73f3517d1a7e71d17d07fc0406896bf1111e64f9a0449d85f8b93d0d239b7ebf8dc94893e5e2e4299a8df5f36ba0f1d7692",
+          "sha256": "b1b42009c126f073aebfd1888945246896d80dc8da336328ec3ea6d49e43aa3b",
+          "sha1": "3028afb2021ed4ebc8cfd27379ce22e2f88bf8d2",
+          "md5": "51ced9233a8b806238e63bdbde06ec24"
+        }
+      ]
+    },
+    {
+      "name": "desktopRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        },
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp-jni-jvm",
+          "version": {
+            "requires": "0.23.0"
+          }
+        },
+        {
+          "group": "org.bouncycastle",
+          "module": "bcprov-jdk15to18",
+          "version": {
+            "requires": "1.78.1"
+          }
+        },
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp",
+          "version": {
+            "requires": "0.23.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-desktop-1.0.0.jar",
+          "url": "hd-wallet-kit-kmp-desktop-1.0.0.jar",
+          "size": 171057,
+          "sha512": "fbce48036383fb1f77134f86f9bdc73f3517d1a7e71d17d07fc0406896bf1111e64f9a0449d85f8b93d0d239b7ebf8dc94893e5e2e4299a8df5f36ba0f1d7692",
+          "sha256": "b1b42009c126f073aebfd1888945246896d80dc8da336328ec3ea6d49e43aa3b",
+          "sha1": "3028afb2021ed4ebc8cfd27379ce22e2f88bf8d2",
+          "md5": "51ced9233a8b806238e63bdbde06ec24"
+        }
+      ]
+    },
+    {
+      "name": "desktopSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-desktop-1.0.0-sources.jar",
+          "url": "hd-wallet-kit-kmp-desktop-1.0.0-sources.jar",
+          "size": 99169,
+          "sha512": "a33848fb3d06176d47956eea90ea8c54676066cdcdc321849fc62353af38129fe8a9514c5723554ce8f78999b0fdbd744be697041470f3090b4e447dce29fd22",
+          "sha256": "889c66493bb852161f5ad53905efaf00ed3240752ff63773931cbd9f5107eef5",
+          "sha1": "db9560c7c368fde5d2dbe362f562718cb3c10ed3",
+          "md5": "51ad8e5e9e467b420836249850085962"
+        }
+      ]
+    }
+  ]
+}

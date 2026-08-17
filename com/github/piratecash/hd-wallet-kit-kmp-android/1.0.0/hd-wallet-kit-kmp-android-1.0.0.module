@@ -1,0 +1,177 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../hd-wallet-kit-kmp/1.0.0/hd-wallet-kit-kmp-1.0.0.module",
+    "group": "com.github.piratecash",
+    "module": "hd-wallet-kit-kmp",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-release.aar",
+          "url": "hd-wallet-kit-kmp-android-1.0.0.aar",
+          "size": 164061,
+          "sha512": "20b67f83c7e9b431fe86df811b0c9171742f1523b97884745691a01301872e44e4a7d59c61c2fa9064da570e767a2e624305fd2bfcc6d52501cd69a8c154bc17",
+          "sha256": "0e0c771a7371cce1cf6afdc3693aaf11cefc425823bb3ef4862c217f56c41075",
+          "sha1": "ed77bff5fdb2b62c3da2bf9b60fccf6df0aa7803",
+          "md5": "2100fb43286c796ca2c60077c83ddb85"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp-jni-android",
+          "version": {
+            "requires": "0.23.0"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-annotations-common"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-annotations-common"
+            }
+          ]
+        },
+        {
+          "group": "org.bouncycastle",
+          "module": "bcprov-jdk15to18",
+          "version": {
+            "requires": "1.78.1"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-annotations-common"
+            }
+          ]
+        },
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp",
+          "version": {
+            "requires": "0.23.0"
+          },
+          "excludes": [
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-stdlib-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-common"
+            },
+            {
+              "group": "org.jetbrains.kotlin",
+              "module": "kotlin-test-annotations-common"
+            }
+          ]
+        }
+      ],
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-release.aar",
+          "url": "hd-wallet-kit-kmp-android-1.0.0.aar",
+          "size": 164061,
+          "sha512": "20b67f83c7e9b431fe86df811b0c9171742f1523b97884745691a01301872e44e4a7d59c61c2fa9064da570e767a2e624305fd2bfcc6d52501cd69a8c154bc17",
+          "sha256": "0e0c771a7371cce1cf6afdc3693aaf11cefc425823bb3ef4862c217f56c41075",
+          "sha1": "ed77bff5fdb2b62c3da2bf9b60fccf6df0aa7803",
+          "md5": "2100fb43286c796ca2c60077c83ddb85"
+        }
+      ]
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-android-1.0.0-sources.jar",
+          "url": "hd-wallet-kit-kmp-android-1.0.0-sources.jar",
+          "size": 99169,
+          "sha512": "a33848fb3d06176d47956eea90ea8c54676066cdcdc321849fc62353af38129fe8a9514c5723554ce8f78999b0fdbd744be697041470f3090b4e447dce29fd22",
+          "sha256": "889c66493bb852161f5ad53905efaf00ed3240752ff63773931cbd9f5107eef5",
+          "sha1": "db9560c7c368fde5d2dbe362f562718cb3c10ed3",
+          "md5": "51ad8e5e9e467b420836249850085962"
+        }
+      ]
+    }
+  ]
+}

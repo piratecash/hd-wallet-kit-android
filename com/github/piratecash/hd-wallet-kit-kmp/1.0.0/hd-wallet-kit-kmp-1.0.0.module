@@ -1,0 +1,167 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.piratecash",
+    "module": "hd-wallet-kit-kmp",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-metadata-1.0.0.jar",
+          "url": "hd-wallet-kit-kmp-1.0.0.jar",
+          "size": 768,
+          "sha512": "d559bea476c4edd1276e507f48c32606ae794d45e0b253566d8717d035b29791c68216ef21d91edb409bb2ae4b64ee4cfa262e28e490370cb5154f1a17360621",
+          "sha256": "f98fbaea967bd70ae0fc07d36e45bd0fd10518fe0db632a3cb3df64301251af8",
+          "sha1": "4b705fa84a5602db0e5f2f4661da33b157039f82",
+          "md5": "8c9b101f417a5686765de3d3da67d404"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "hd-wallet-kit-kmp-kotlin-1.0.0-sources.jar",
+          "url": "hd-wallet-kit-kmp-1.0.0-sources.jar",
+          "size": 99169,
+          "sha512": "07450276f7338dca91ec5905a88f44e05e4dbc47790be07f60b114c0e09b9aebb71cfbcd10b6ebf58e468709a2043b83a75c6ec91b958036bc70f579d7004fca",
+          "sha256": "0fad51107cfad9bfc28119a6e3f4b48a3dc12d8ff4c4826e731a447f15f70b00",
+          "sha1": "6da75018570c38fa1ffc4538ec390613769a844d",
+          "md5": "02020de65f51253d25c811b3832a2713"
+        }
+      ]
+    },
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-android/1.0.0/hd-wallet-kit-kmp-android-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-android",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-android/1.0.0/hd-wallet-kit-kmp-android-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-android",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-android/1.0.0/hd-wallet-kit-kmp-android-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-android",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "desktopApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-desktop/1.0.0/hd-wallet-kit-kmp-desktop-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-desktop",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "desktopRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-desktop/1.0.0/hd-wallet-kit-kmp-desktop-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-desktop",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "desktopSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../hd-wallet-kit-kmp-desktop/1.0.0/hd-wallet-kit-kmp-desktop-1.0.0.module",
+        "group": "com.github.piratecash",
+        "module": "hd-wallet-kit-kmp-desktop",
+        "version": "1.0.0"
+      }
+    }
+  ]
+}
