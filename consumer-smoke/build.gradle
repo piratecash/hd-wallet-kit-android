@@ -1,0 +1,29 @@
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform' version '2.3.10'
+    id 'com.android.library' version '8.8.2'
+}
+
+group = 'com.github.piratecash.smoke'
+version = '0.0.0'
+def walletVersion = providers.gradleProperty('HD_WALLET_VERSION').orElse('0.0.0-SNAPSHOT').get()
+
+kotlin {
+    androidTarget()
+    jvm('desktop') {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation "com.github.piratecash:hd-wallet-kit-kmp:$walletVersion"
+        }
+    }
+}
+
+android {
+    namespace 'io.horizontalsystems.hdwalletkit.smoke'
+    compileSdk 35
+    defaultConfig { minSdk 24 }
+}

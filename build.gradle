@@ -1,42 +1,60 @@
-buildscript {
-    ext.kotlin_version = '1.3.71'
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform' version '2.3.10'
+    id 'com.android.library' version '8.8.2'
+    id 'maven-publish'
+}
 
+group = 'com.github.piratecash'
+
+def publicationVersion = providers.gradleProperty('VERSION_NAME').orElse('0.0.0-SNAPSHOT').get()
+def secp256k1Version = '0.24.0'
+if (publicationVersion != '0.0.0-SNAPSHOT' && !(publicationVersion ==~ /(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)/)) {
+    throw new GradleException('VERSION_NAME must be exact numeric SemVer: MAJOR.MINOR.PATCH')
+}
+version = publicationVersion
+
+kotlin {
+    androidTarget { publishLibraryVariants('release') }
+    jvm('desktop') { compilerOptions { jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21 } }
+
+    sourceSets {
+        commonMain.dependencies { implementation "fr.acinq.secp256k1:secp256k1-kmp:$secp256k1Version" }
+        commonTest.dependencies { implementation kotlin('test') }
+        jvmMain.dependsOn(commonMain)
+        jvmMain.dependencies { implementation 'org.bouncycastle:bcprov-jdk15to18:1.78.1' }
+        androidMain.dependsOn(jvmMain)
+        desktopMain.dependsOn(jvmMain)
+        androidMain.dependencies {
+            implementation "fr.acinq.secp256k1:secp256k1-kmp-jni-android:$secp256k1Version"
+        }
+        desktopMain.dependencies {
+            implementation "fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:$secp256k1Version"
+        }
+        // Android local unit tests execute on the host JVM, so they need the host JNI
+        // implementation in addition to the packaged Android runtime artifact.
+        androidUnitTest.dependencies {
+            implementation 'junit:junit:4.13.2'
+            runtimeOnly "fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:$secp256k1Version"
+        }
+        desktopTest.dependencies { implementation 'junit:junit:4.13.2'; implementation kotlin('test-junit') }
+    }
+}
+
+
+android {
+    namespace 'io.horizontalsystems.hdwalletkit'
+    compileSdk 35
+    defaultConfig { minSdk 24 }
+}
+
+publishing {
     repositories {
-        mavenCentral()
+        maven {
+            name = 'localBuild'
+            url = layout.buildDirectory.dir('maven-repo')
+        }
     }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    publications.withType(MavenPublication).configureEach {
+        pom { name = 'HD Wallet Kit'; description = 'Kotlin Multiplatform HD wallet primitives' }
     }
-}
-
-group 'com.github.horizontalsystems'
-version '1.0.0'
-
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-apply plugin: 'maven'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.72"
-
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.65'
-
-    // Test helpers
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:3.3.3'
-    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.6.0'
-    testImplementation 'org.powermock:powermock-api-mockito2:2.0.7'
-    testImplementation 'org.powermock:powermock-module-junit4:2.0.7'
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
 }

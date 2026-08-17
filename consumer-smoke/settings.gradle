@@ -8,7 +8,11 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories { google(); mavenCentral() }
+    repositories {
+        maven { url = uri('../build/maven-repo') }
+        google()
+        mavenCentral()
+    }
 }
 
-rootProject.name = 'hd-wallet-kit-kmp'
+rootProject.name = 'hd-wallet-kit-kmp-consumer-smoke'
