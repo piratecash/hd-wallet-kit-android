@@ -7,6 +7,7 @@ plugins {
 group = 'com.github.piratecash'
 
 def publicationVersion = providers.gradleProperty('VERSION_NAME').orElse('0.0.0-SNAPSHOT').get()
+def secp256k1Version = '0.24.0'
 if (publicationVersion != '0.0.0-SNAPSHOT' && !(publicationVersion ==~ /(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)/)) {
     throw new GradleException('VERSION_NAME must be exact numeric SemVer: MAJOR.MINOR.PATCH')
 }
@@ -17,23 +18,23 @@ kotlin {
     jvm('desktop') { compilerOptions { jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21 } }
 
     sourceSets {
-        commonMain.dependencies { implementation 'fr.acinq.secp256k1:secp256k1-kmp:0.23.0' }
+        commonMain.dependencies { implementation "fr.acinq.secp256k1:secp256k1-kmp:$secp256k1Version" }
         commonTest.dependencies { implementation kotlin('test') }
         jvmMain.dependsOn(commonMain)
         jvmMain.dependencies { implementation 'org.bouncycastle:bcprov-jdk15to18:1.78.1' }
         androidMain.dependsOn(jvmMain)
         desktopMain.dependsOn(jvmMain)
         androidMain.dependencies {
-            implementation 'fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.23.0'
+            implementation "fr.acinq.secp256k1:secp256k1-kmp-jni-android:$secp256k1Version"
         }
         desktopMain.dependencies {
-            implementation 'fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:0.23.0'
+            implementation "fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:$secp256k1Version"
         }
         // Android local unit tests execute on the host JVM, so they need the host JNI
         // implementation in addition to the packaged Android runtime artifact.
         androidUnitTest.dependencies {
             implementation 'junit:junit:4.13.2'
-            runtimeOnly 'fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:0.23.0'
+            runtimeOnly "fr.acinq.secp256k1:secp256k1-kmp-jni-jvm:$secp256k1Version"
         }
         desktopTest.dependencies { implementation 'junit:junit:4.13.2'; implementation kotlin('test-junit') }
     }
